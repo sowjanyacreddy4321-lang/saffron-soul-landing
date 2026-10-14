@@ -1,25 +1,288 @@
-import { useEffect, useState } from 'react';
-import * as Dialog from '@radix-ui/react-dialog';
-import { ArrowLeft, ArrowRight, ChefHat, Leaf, Maximize2, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { categories, diets, menuItems, gallery, reviews, type Category, type Diet } from '@/data/restaurant';
-import { Photo, SectionHeading, Stars } from './shared';
+import { useEffect, useState } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { ArrowLeft, ArrowRight, ChefHat, Leaf, Maximize2, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  categories,
+  diets,
+  menuItems,
+  gallery,
+  reviews,
+  type Category,
+  type Diet,
+} from "@/data/restaurant";
+import { Photo, SectionHeading, Stars } from "./shared";
 
 export function MenuSection() {
- const [category,setCategory]=useState<Category>('All'); const [diet,setDiet]=useState<Diet>('All');
- const items=menuItems.filter(item=>(category==='All'||item.category===category)&&(diet==='All'||item.tags.includes(diet)));
- return <section className="section menu-section" id="menu"><div className="container"><SectionHeading label="A LITTLE SOMETHING FOR EVERY CRAVING" title="Tradition, with a Delicious Twist." description="Familiar flavours. Thoughtful touches. Made fresh, and made to be shared."/><div className="menu-tabs" role="group" aria-label="Menu categories">{categories.map(value=><Button key={value} variant="filter" data-active={category===value} aria-pressed={category===value} onClick={()=>setCategory(value)}>{value}</Button>)}</div><div className="diet-filters" role="group" aria-label="Dietary filters"><span>YOUR PREFERENCES</span>{diets.map(value=><Button key={value} variant="filter" data-active={diet===value} aria-pressed={diet===value} onClick={()=>setDiet(value)}>{value==='Vegan'&&<Leaf/>}{value}</Button>)}</div><div className="menu-results"><span aria-live="polite">{items.length} dishes to savour</span><span>Thoughtfully sourced. Beautifully served.</span></div>
- {items.length?<div className="menu-grid">{items.map(item=><article className="menu-card" key={item.id}><div className="menu-photo"><Photo src={item.image} alt={`${item.name} — illustrative food photography`} loading="lazy"/>{item.special&&<span className="special-badge"><ChefHat/> Chef’s Special</span>}</div><div className="menu-card-body"><div className="dish-title"><h3>{item.name}</h3><span>₹{item.price}</span></div><p>{item.description}</p><div className="diet-tags"><span aria-hidden="true" className={`diet-marker ${item.vegetarian?'':'nonveg'}`}/><span>{item.vegetarian?'Vegetarian':'Non-vegetarian'}</span>{item.tags.filter(tag=>tag!=='Vegetarian'&&tag!=='Non-vegetarian').map(tag=><span key={tag}>· {tag}</span>)}</div></div></article>)}</div>:<div className="empty-state" role="status"><Leaf/><h3>A different craving?</h3><p>No dishes match this combination. Try another category or preference.</p><Button variant="brand" onClick={()=>{setCategory('All');setDiet('All');}}>Show all dishes</Button></div>}
- <p className="menu-note">Illustrative menu and food photography · Sample prices in ₹ · Please discuss allergies with your restaurant.</p></div></section>;
+  const [category, setCategory] = useState<Category>("All");
+  const [diet, setDiet] = useState<Diet>("All");
+  const items = menuItems.filter(
+    (item) =>
+      (category === "All" || item.category === category) &&
+      (diet === "All" || item.tags.includes(diet)),
+  );
+  return (
+    <section className="section menu-section" id="menu">
+      <div className="container">
+        <SectionHeading
+          label="A LITTLE SOMETHING FOR EVERY CRAVING"
+          title="Tradition, with a Delicious Twist."
+          description="Familiar flavours. Thoughtful touches. Made fresh, and made to be shared."
+        />
+        <div className="menu-tabs" role="group" aria-label="Menu categories">
+          {categories.map((value) => (
+            <Button
+              key={value}
+              variant="filter"
+              data-active={category === value}
+              aria-pressed={category === value}
+              onClick={() => setCategory(value)}
+            >
+              {value}
+            </Button>
+          ))}
+        </div>
+        <div className="diet-filters" role="group" aria-label="Dietary filters">
+          <span>YOUR PREFERENCES</span>
+          {diets.map((value) => (
+            <Button
+              key={value}
+              variant="filter"
+              data-active={diet === value}
+              aria-pressed={diet === value}
+              onClick={() => setDiet(value)}
+            >
+              {value === "Vegan" && <Leaf />}
+              {value}
+            </Button>
+          ))}
+        </div>
+        <div className="menu-results">
+          <span aria-live="polite">{items.length} dishes to savour</span>
+          <span>Thoughtfully sourced. Beautifully served.</span>
+        </div>
+        {items.length ? (
+          <div className="menu-grid">
+            {items.map((item) => (
+              <article className="menu-card" key={item.id}>
+                <div className="menu-photo">
+                  <Photo
+                    src={item.image}
+                    alt={`${item.name} — illustrative food photography`}
+                    loading="lazy"
+                  />
+                  {item.special && (
+                    <span className="special-badge">
+                      <ChefHat /> Chef’s Special
+                    </span>
+                  )}
+                </div>
+                <div className="menu-card-body">
+                  <div className="dish-title">
+                    <h3>{item.name}</h3>
+                    <span>₹{item.price}</span>
+                  </div>
+                  <p>{item.description}</p>
+                  <div className="diet-tags">
+                    <span
+                      aria-hidden="true"
+                      className={`diet-marker ${item.vegetarian ? "" : "nonveg"}`}
+                    />
+                    <span>{item.vegetarian ? "Vegetarian" : "Non-vegetarian"}</span>
+                    {item.tags
+                      .filter((tag) => tag !== "Vegetarian" && tag !== "Non-vegetarian")
+                      .map((tag) => (
+                        <span key={tag}>· {tag}</span>
+                      ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state" role="status">
+            <Leaf />
+            <h3>A different craving?</h3>
+            <p>No dishes match this combination. Try another category or preference.</p>
+            <Button
+              variant="brand"
+              onClick={() => {
+                setCategory("All");
+                setDiet("All");
+              }}
+            >
+              Show all dishes
+            </Button>
+          </div>
+        )}
+        <p className="menu-note">
+          Illustrative menu and food photography · Sample prices in ₹ · Please discuss allergies
+          with your restaurant.
+        </p>
+      </div>
+    </section>
+  );
 }
 export function GallerySection() {
- const [index,setIndex]=useState<number|null>(null);
- const move=(direction:number)=>setIndex(prev=>prev===null?null:(prev+direction+gallery.length)%gallery.length);
- useEffect(()=>{if(index===null)return;const handler=(event:KeyboardEvent)=>{if(event.key==='ArrowLeft'){event.preventDefault();move(-1);}if(event.key==='ArrowRight'){event.preventDefault();move(1);}};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler);},[index]);
- const current=index===null?null:gallery[index];
- return <section className="section" id="gallery"><div className="container"><SectionHeading label="THE SAFFRON & SOUL LIFE" title="A Feast for the Eyes." description="A glimpse of the flavours, spaces, and little moments we love."/><div className="gallery-grid">{gallery.map((item,i)=><Button variant="ghost" className="gallery-item" key={item.alt} onClick={()=>setIndex(i)} aria-label={`Open photo: ${item.alt}`}><Photo src={item.image} alt={item.alt} loading="lazy"/><span className="gallery-caption">{item.label}<Maximize2/></span></Button>)}</div></div><Dialog.Root open={index!==null} onOpenChange={open=>{if(!open)setIndex(null);}}><Dialog.Portal><Dialog.Overlay className="lightbox-overlay"/><Dialog.Content className="lightbox-content"><Dialog.Close asChild><Button className="lightbox-close" size="icon" aria-label="Close gallery"><X/></Button></Dialog.Close>{current&&<><Photo className="lightbox-image" src={current.image} alt={current.alt}/><div className="lightbox-bar"><div><Dialog.Title asChild><h3>{current.label}</h3></Dialog.Title><Dialog.Description className="sr-only">{current.alt}. Illustrative restaurant photography.</Dialog.Description></div><div className="lightbox-controls"><Button size="icon" onClick={()=>move(-1)} aria-label="Previous photo"><ArrowLeft/></Button><small>{(index??0)+1} / {gallery.length}</small><Button size="icon" onClick={()=>move(1)} aria-label="Next photo"><ArrowRight/></Button></div></div></>}</Dialog.Content></Dialog.Portal></Dialog.Root></section>;
+  const [index, setIndex] = useState<number | null>(null);
+  const move = (direction: number) =>
+    setIndex((prev) =>
+      prev === null ? null : (prev + direction + gallery.length) % gallery.length,
+    );
+  useEffect(() => {
+    if (index === null) return;
+    const handler = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        move(-1);
+      }
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        move(1);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [index]);
+  const current = index === null ? null : gallery[index];
+  return (
+    <section className="section" id="gallery">
+      <div className="container">
+        <SectionHeading
+          label="THE SAFFRON & SOUL LIFE"
+          title="A Feast for the Eyes."
+          description="A glimpse of the flavours, spaces, and little moments we love."
+        />
+        <div className="gallery-grid">
+          {gallery.map((item, i) => (
+            <Button
+              variant="ghost"
+              className="gallery-item"
+              key={item.alt}
+              onClick={() => setIndex(i)}
+              aria-label={`Open photo: ${item.alt}`}
+            >
+              <Photo src={item.image} alt={item.alt} loading="lazy" />
+              <span className="gallery-caption">
+                {item.label}
+                <Maximize2 />
+              </span>
+            </Button>
+          ))}
+        </div>
+      </div>
+      <Dialog.Root
+        open={index !== null}
+        onOpenChange={(open) => {
+          if (!open) setIndex(null);
+        }}
+      >
+        <Dialog.Portal>
+          <Dialog.Overlay className="lightbox-overlay" />
+          <Dialog.Content className="lightbox-content">
+            <Dialog.Close asChild>
+              <Button className="lightbox-close" size="icon" aria-label="Close gallery">
+                <X />
+              </Button>
+            </Dialog.Close>
+            {current && (
+              <>
+                <Photo className="lightbox-image" src={current.image} alt={current.alt} />
+                <div className="lightbox-bar">
+                  <div>
+                    <Dialog.Title asChild>
+                      <h3>{current.label}</h3>
+                    </Dialog.Title>
+                    <Dialog.Description className="sr-only">
+                      {current.alt}. Illustrative restaurant photography.
+                    </Dialog.Description>
+                  </div>
+                  <div className="lightbox-controls">
+                    <Button size="icon" onClick={() => move(-1)} aria-label="Previous photo">
+                      <ArrowLeft />
+                    </Button>
+                    <small>
+                      {(index ?? 0) + 1} / {gallery.length}
+                    </small>
+                    <Button size="icon" onClick={() => move(1)} aria-label="Next photo">
+                      <ArrowRight />
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </section>
+  );
 }
 export function ReviewsSection() {
- const [index,setIndex]=useState(0);
- return <section className="section" id="reviews"><div className="container"><SectionHeading label="GOOD FOOD. HAPPY HEARTS." title="A Little Love from Our Guests." description="The best part of what we do? The memories you take home."/><div className="reviews-grid" aria-live="polite">{[0,1,2].map(offset=>{const review=reviews[(index+offset)%reviews.length];if(!review)return null;return <article className="review-card" key={`${offset}-${review.name}`}><Stars rating={review.rating}/><blockquote>“{review.quote}”</blockquote><div className="review-person"><span className="review-avatar" aria-hidden="true">{review.name.charAt(0)}</span><div><strong>{review.name}</strong><small>{review.occasion}</small></div></div></article>;})}</div><div className="review-controls"><Button variant="outline" size="icon" aria-label="Previous review" onClick={()=>setIndex(prev=>(prev-1+reviews.length)%reviews.length)}><ArrowLeft/></Button><div className="review-indicators">{reviews.map((review,i)=><Button key={review.name} variant="ghost" aria-label={`Show review ${i+1}`} aria-current={index===i} onClick={()=>setIndex(i)}><span/></Button>)}</div><Button variant="outline" size="icon" aria-label="Next review" onClick={()=>setIndex(prev=>(prev+1)%reviews.length)}><ArrowRight/></Button></div><p className="reviews-note">Illustrative testimonials and guest rating. Not verified customer reviews.</p></div></section>;
+  const [index, setIndex] = useState(0);
+  return (
+    <section className="section" id="reviews">
+      <div className="container">
+        <SectionHeading
+          label="GOOD FOOD. HAPPY HEARTS."
+          title="A Little Love from Our Guests."
+          description="The best part of what we do? The memories you take home."
+        />
+        <div className="reviews-grid" aria-live="polite">
+          {[0, 1, 2].map((offset) => {
+            const review = reviews[(index + offset) % reviews.length];
+            if (!review) return null;
+            return (
+              <article className="review-card" key={`${offset}-${review.name}`}>
+                <Stars rating={review.rating} />
+                <blockquote>“{review.quote}”</blockquote>
+                <div className="review-person">
+                  <span className="review-avatar" aria-hidden="true">
+                    {review.name.charAt(0)}
+                  </span>
+                  <div>
+                    <strong>{review.name}</strong>
+                    <small>{review.occasion}</small>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <div className="review-controls">
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label="Previous review"
+            onClick={() => setIndex((prev) => (prev - 1 + reviews.length) % reviews.length)}
+          >
+            <ArrowLeft />
+          </Button>
+          <div className="review-indicators">
+            {reviews.map((review, i) => (
+              <Button
+                key={review.name}
+                variant="ghost"
+                aria-label={`Show review ${i + 1}`}
+                aria-current={index === i}
+                onClick={() => setIndex(i)}
+              >
+                <span />
+              </Button>
+            ))}
+          </div>
+          <Button
+            variant="outline"
+            size="icon"
+            aria-label="Next review"
+            onClick={() => setIndex((prev) => (prev + 1) % reviews.length)}
+          >
+            <ArrowRight />
+          </Button>
+        </div>
+        <p className="reviews-note">
+          Illustrative testimonials and guest rating. Not verified customer reviews.
+        </p>
+      </div>
+    </section>
+  );
 }

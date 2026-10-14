@@ -15,3 +15,4 @@
 - Preserve TanStack Start and the existing Lovable Vite integration; alternate deployments must not replace the running platform configuration.
 - Use shared Button controls and semantic CSS design tokens; this keeps interactive states and styling consistent.
 - Load CDN media from committed asset pointers and retain explicit image fallbacks; this avoids hotlinked runtime dependencies and broken images.
+- Mirror public asset pointers with the build-time preparation script for independent deployments; Vercel cannot serve Lovable-only proxy paths without static media copies.

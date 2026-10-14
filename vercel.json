@@ -1,0 +1,6 @@
+{
+ "framework": null,
+ "buildCommand": "node scripts/prepare-assets.mjs && npm run build",
+ "outputDirectory": ".vercel/output",
+ "env": { "NITRO_PRESET": "vercel" }
+}

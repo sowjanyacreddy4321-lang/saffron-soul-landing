@@ -6,8 +6,9 @@ import dining from '@/assets/dining.jpg.asset.json';
 import dessert from '@/assets/dessert.jpg.asset.json';
 import drink from '@/assets/drink.jpg.asset.json';
 import paneer from '@/assets/paneer.jpg.asset.json';
+import biryani from '@/assets/biryani.jpg.asset.json';
 
-export const photos = { feast: feast.url, curry: curry.url, tikka: tikka.url, interior: interior.url, dining: dining.url, dessert: dessert.url, drink: drink.url, paneer: paneer.url };
+export const photos = { feast: feast.url, curry: curry.url, tikka: tikka.url, interior: interior.url, dining: dining.url, dessert: dessert.url, drink: drink.url, paneer: paneer.url, biryani: biryani.url };
 export const categories = ['All', 'Starters', 'Mains', 'Desserts', 'Drinks'] as const;
 export const diets = ['All', 'Vegetarian', 'Vegan', 'Non-vegetarian', 'Gluten-free'] as const;
 export type Category = typeof categories[number];
@@ -19,7 +20,7 @@ export const menuItems: MenuItem[] = [
  { id: 3, name: 'Smoky Chicken Tikka', description: 'Tandoor-kissed chicken with Kashmiri chilli and fresh lime.', price: 445, category: 'Starters', vegetarian: false, tags: ['Non-vegetarian', 'Gluten-free'], image: photos.tikka },
  { id: 4, name: 'Old Delhi Dal Makhani', description: 'Black lentils, slow-simmered overnight with butter and cream.', price: 365, category: 'Mains', vegetarian: true, tags: ['Vegetarian', 'Gluten-free'], image: photos.curry, special: true },
  { id: 5, name: 'Paneer Lababdar', description: 'Soft paneer in a rich tomato gravy with toasted fenugreek.', price: 425, category: 'Mains', vegetarian: true, tags: ['Vegetarian', 'Gluten-free'], image: photos.paneer },
- { id: 6, name: 'Hyderabadi Dum Biryani', description: 'Fragrant basmati, tender chicken, saffron and caramelised onions.', price: 495, category: 'Mains', vegetarian: false, tags: ['Non-vegetarian', 'Gluten-free'], image: photos.feast, special: true },
+ { id: 6, name: 'Hyderabadi Dum Biryani', description: 'Fragrant basmati, tender chicken, saffron and caramelised onions.', price: 495, category: 'Mains', vegetarian: false, tags: ['Non-vegetarian', 'Gluten-free'], image: photos.biryani, special: true },
  { id: 7, name: 'Soulful Butter Chicken', description: 'Tandoori chicken folded into our silky, signature tomato sauce.', price: 485, category: 'Mains', vegetarian: false, tags: ['Non-vegetarian', 'Gluten-free'], image: photos.curry },
  { id: 8, name: 'Seasonal Vegetable Curry', description: 'Market vegetables, coconut milk and fragrant curry leaves.', price: 355, category: 'Mains', vegetarian: true, tags: ['Vegetarian', 'Vegan', 'Gluten-free'], image: photos.paneer },
  { id: 9, name: 'Warm Gulab Jamun', description: 'Golden milk dumplings in rose and cardamom syrup.', price: 195, category: 'Desserts', vegetarian: true, tags: ['Vegetarian'], image: photos.dessert },

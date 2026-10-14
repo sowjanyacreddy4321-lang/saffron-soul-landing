@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, ArrowUp, ChefHat, Clock3, Flower2, Heart, Instagram, Leaf, MapPin, Menu, Phone, Sparkles, Utensils, X } from 'lucide-react';
+import { ArrowRight, ArrowUp, ChefHat, Clock3, Flower2, Heart, Instagram, Leaf, MapPin, Menu, Phone, Utensils, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { demoPhone, mapsUrl, menuItems, navigation, photos } from '@/data/restaurant';
 import { Photo, SectionHeading, Stars, Wordmark } from './shared';

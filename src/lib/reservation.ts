@@ -7,7 +7,7 @@ export function timeSlots(date: string) {
  for(let minutes=weekend ? 660 : 720; minutes <= (weekend ? 1320 : 1290); minutes+=30) slots.push(`${String(Math.floor(minutes/60)).padStart(2,'0')}:${String(minutes%60).padStart(2,'0')}`);
  return slots;
 }
-export function formatTime(time:string) { const [h,m]=time.split(':').map(Number); return `${h%12 || 12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`; }
+export function formatTime(time:string) { const [h=0,m=0]=time.split(':').map(Number); return `${h%12 || 12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`; }
 export const reservationSchema = z.object({
  name: z.string().trim().min(2,'Please enter at least 2 characters.').max(80,'Please use no more than 80 characters.').regex(/^[\p{L}\p{M} .'-]+$/u,'Please enter a valid name.'),
  phone: z.string().trim().refine(value=>/^(?:\+91|91)?[6-9]\d{9}$/.test(value.replace(/[\s()-]/g,'')), 'Enter a valid 10-digit Indian mobile number, optionally with +91.'),
